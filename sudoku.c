@@ -31,16 +31,17 @@ int main(int *argc, char *argv[])
     //inicia grafo
 	Grafo *grafo;
 	grafo= iniciaGrafo(entrada,81);
-	//desenhaSudoku(grafo);
+	desenhaSudoku(grafo);
+	//se entrada for inválida termina o programa.
 	if(!verificaEntrada(grafo)) return 0;
 	//realiza colaração, verificação e visualização de resultados
-	 imprimeGrafo(grafo);
+	// imprimeGrafo(grafo);
 	coloreGrafo(grafo,0);
-	//desenhaSudoku(grafo);
-	//int x = verificaResposta(grafo);
-
+	desenhaSudoku(grafo);
+	int x = verificaResposta(grafo);
 }
-
+//verifica se nao ha valores errados ou
+//invalidos no sudoku de entrada
 int verificaEntrada(Grafo *g)
 {
 	for(int i = 0; i < g->v ; i++)
@@ -67,7 +68,7 @@ int verificaEntrada(Grafo *g)
 	return 1;
 }
 //verifica se algum vertice ficou sem coloracao
-//ou algum adjacente possui cor igual
+//ou algum adjacente possui cor igual para cada vertice no grafo
 int verificaResposta(Grafo *g)
 {
 	for(int i = 0; i < g->v ; i++)
@@ -97,15 +98,14 @@ int verificaResposta(Grafo *g)
 int coloreGrafo(Grafo *g, int i)
 {
 	//se ainda nao verificou todos os vertices
-	if(i < g -> v) 
+	if(i < g -> v)
 	{
 		//se for vertice iniciado na entrada, i.e, fixo, passa pro proximo
-		if( ehFixo(g,i) )
+		if( ehFixo(g,i) ) 
 		{
-			if(coloreGrafo(g,i+1)) return 1;
 			//se o proximo nao puder ser colorido volta pro anterior
 			//do atual pois ele eh fixo
-			return 0;
+			return coloreGrafo(g,i+1);
 		}
 		//se nao tiver cor procura a cor disponivel
 		for(int cor = 1 ; cor <= 9; cor++)
@@ -203,6 +203,8 @@ Grafo* iniciaGrafo(char *entrada, int grafoSize)
 	return grafo;
 }
 
+//funcao para imprimir o sudoku na tela
+//em forma de matriz, com linhas entre colunas
 void desenhaSudoku(Grafo *g)
 {
 	int i,j,k,m,x;

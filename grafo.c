@@ -89,14 +89,14 @@ void imprimeGrafo(Grafo *g)
 		printf("Grafo com %d vertices e %d arestas\n",g -> v, g -> e );
 		for(i=0 ; i < g->v ; ++i)
 		{
-			//printf("v%d(%d) ->",i,g->adj[i].cor);
+			printf("v%d(%d) -> ",i,g->adj[i].cor);
 			w = g -> adj[i].prox;
 			while(w != NULL)
 			{
-				printf(" %d %d\n",i,w -> val);
+				printf("[%d]-",w -> val);
 				w = w -> prox;
 			}
-			printf("\n");
+			printf("¬\n");
 		}
 	}
 }
